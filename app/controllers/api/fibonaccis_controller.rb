@@ -11,7 +11,7 @@ module Api
         status = :bad_request
       end
 
-      render json: response, status:
+      render json: response, status:status
     end
   end
 end
