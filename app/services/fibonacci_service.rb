@@ -1,6 +1,6 @@
 class FibonacciService
   attr_reader :value
-  attr_accessor :runtime, :start_time, :end_time
+  attr_accessor :result, :runtime, :start_time, :end_time
 
 
   def initialize(value)
@@ -9,10 +9,15 @@ class FibonacciService
 
   def call
     @start_time = Time.now
-    result = find_nth_fibonacci_number
+    @result = find_nth_fibonacci_number
     @end_time   = Time.now
 
-    { value: value, result: result, runtime: calculate_runtime }
+    persist
+  end
+
+  def persist
+    data = { value: value, result: result, runtime: calculate_runtime }
+    Fibonacci.create!(data)
   end
 
   def calculate_runtime
